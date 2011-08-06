@@ -3,83 +3,60 @@ package smug;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
+import com.badlogic.gdx.graphics.GL10;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Engine implements ApplicationListener
+public class Engine
 {
 	Game game;
 	
 	static final int LOGICS_PER_SEC = 60;
 	
-	int fpsCounter = 0;	
-
-	double time = 0.0f;
-	double nextUpdateTime = 0.0f;
-	double lastRenderTime = 0.0f;
-	double lastFpsUpdate = 0.0f;
-	double logicLength = 1.0f / LOGICS_PER_SEC;
 	
-	public Engine(Game game)
+	private static Engine instance;
+	public static Engine getInstance() { if (instance == null) instance = new Engine(); return instance;}
+	
+	private Scene scene;
+	
+	private SpriteBatch batch;
+	
+	public Engine()
+	{
+		this.scene = new Scene();
+	}
+	
+	public void runGame(Game game)
 	{
 		this.game = game;
-		new LwjglApplication(this, game.name, game.width, game.height, game.fullscreen);			
-	}
-
-	@Override
-	public void create()
-	{
-		this.game.start();
-	}
-
-	@Override
-	public void dispose()
-	{
-		// TODO Auto-generated method stub
+		new LwjglApplication(this.game, game.name, game.width, game.height, game.fullscreen);		
 		
+		batch.getProjectionMatrix().setToOrtho2D(0, 0, game.width, game.height);
 	}
 
-	@Override
-	public void pause()
+	public Scene getScene()
 	{
-		// TODO Auto-generated method stub
-		
+		return this.scene;
 	}
-
-	@Override
+	
+	
 	public void render()
 	{
-		this.time += Gdx.graphics.getDeltaTime(); 
-
-		if(this.time - lastFpsUpdate >= 1.0f)
+		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		Gdx.gl11.glColor4f(0,1,0,1);
+		batch.begin();
+		batch.enableBlending();
+		
+		for (GameObject gameObject : scene.getGameObjects())
 		{
-			System.out.print(this.game.name + ", fps: " + this.fpsCounter + "\n");
-			this.fpsCounter = 0;
-			this.lastFpsUpdate = this.time;
+			for (Component component : gameObject.getComponents())
+			{
+				if (component instanceof Drawable)
+				{
+					((Drawable)component).getSprite().draw(batch);
+				}
+			}
 		}
-		
-		if(this.time >= this.nextUpdateTime + this.logicLength)
-		{
-			this.nextUpdateTime += this.logicLength;
-			
-			this.game.update();
-		}
-		
-		this.lastRenderTime = this.time;
-		this.fpsCounter++;	
-	}
-
-	@Override
-	public void resize(int arg0, int arg1)
-	{
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void resume()
-	{
-		// TODO Auto-generated method stub
-		
-	}
-		
 	
+		batch.end();	
+	}	
 }
