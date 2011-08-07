@@ -1,6 +1,6 @@
 package smug;
 
-public class Component
+public abstract class Component
 {
 	protected GameObject gameObject;
 	
@@ -9,5 +9,13 @@ public class Component
 		this.gameObject = gameObject;
 	}
 	
+	public GameObject getGameObject()
+	{
+		return this.gameObject;
+	}
 	
+	public void onAttach()
+	{
+	}
+		
 }

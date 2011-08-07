@@ -12,7 +12,12 @@ public class GameObject
 	public GameObject()
 	{
 		this.position = Vector.zero;
-		
+		Engine.getInstance().getScene().addGameObject(this);		
+	}
+	
+	public GameObject(Vector position)
+	{
+		this.position = position;
 		Engine.getInstance().getScene().addGameObject(this);		
 	}
 	
@@ -21,6 +26,15 @@ public class GameObject
 		this.position = position;
 	}
 			
+	public Vector getPosition()
+	{
+		return this.position;
+	}
+	
+	public void move(Vector movement)
+	{
+		this.position.addEquals(movement);
+	}
 	
 	public List<Component> getComponents()
 	{
@@ -29,7 +43,9 @@ public class GameObject
 	
 	public void addComponent(Component component)
 	{
+		component.setGameObject(this);
 		this.components.add(component);
+		component.onAttach();
 	}
 
 	public void removeComponent(Component component)

@@ -5,7 +5,7 @@ import com.badlogic.gdx.Gdx;
 
 public class Game implements ApplicationListener
 {
-	public String name = "Smug Game";
+	public String name = "JSmug Game";
 	public int width = 800;
 	public int height = 600;
 	public boolean fullscreen = false;
@@ -58,6 +58,8 @@ public class Game implements ApplicationListener
 			this.update();
 		}
 		
+		
+		Renderer.getInstance().render();
 		this.lastRenderTime = this.time;
 		this.fpsCounter++;	
 	}
