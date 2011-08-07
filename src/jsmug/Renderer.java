@@ -1,4 +1,6 @@
-package smug;
+package jsmug;
+
+import java.util.List;
 
 import org.lwjgl.opengl.GL11;
 
@@ -47,16 +49,27 @@ public class Renderer
 		{
 			for (Component component : gameObject.getComponents())
 			{
-				if (component instanceof Drawable)
+				if (component instanceof TextureDrawable)
 				{
-					Sprite sprite = ((Drawable)component).getSprite();
-					Vector pos = ((Drawable)component).getGameObject().getPosition();
+					Sprite sprite = ((TextureDrawable)component).getSprite();
+					Vector pos = ((TextureDrawable)component).getGameObject().getPosition();
 					sprite.setPosition(pos.getX() - sprite.getOriginX(), pos.getY() - sprite.getOriginY());
 					sprite.draw(batch);
 				}
+				
+				if (component instanceof TextDrawable)
+				{
+					List<Sprite> sprites = ((TextDrawable)component).getSprites();
+					Vector pos = ((TextDrawable)component).getGameObject().getPosition();
+					for (Sprite sprite : sprites)
+					{
+						sprite.setPosition(pos.getX() - sprite.getOriginX(), pos.getY() - sprite.getOriginY());
+						sprite.draw(batch);
+					}
+				}	
 			}
 		}
-	
+		
 		batch.end();	
 		
 		if (debugMode)

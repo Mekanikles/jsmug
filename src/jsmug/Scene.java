@@ -1,4 +1,4 @@
-package smug;
+package jsmug;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -1,4 +1,4 @@
-package smug;
+package jsmug;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;

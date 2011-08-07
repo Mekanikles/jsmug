@@ -1,4 +1,4 @@
-package smug;
+package jsmug;
 
 public abstract class Component
 {

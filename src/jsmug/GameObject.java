@@ -1,4 +1,4 @@
-package smug;
+package jsmug;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,11 +25,30 @@ public class GameObject
 	{
 		this.position = position;
 	}
-			
+	
+	public void setPositionX(float x)
+	{
+		this.position.setX(x);
+	}	
+	public void setPositionY(float y)
+	{
+		this.position.setY(y);
+	}	
+	
+	
 	public Vector getPosition()
 	{
 		return this.position;
 	}
+	
+	public float getPositionX()
+	{
+		return this.position.getX();
+	}	
+	public float getPositionY()
+	{
+		return this.position.getY();
+	}	
 	
 	public void move(Vector movement)
 	{
@@ -41,16 +60,18 @@ public class GameObject
 		return this.components;
 	}
 	
-	public void addComponent(Component component)
+	public Component addComponent(Component component)
 	{
 		component.setGameObject(this);
 		this.components.add(component);
 		component.onAttach();
+		return component;
 	}
 
-	public void removeComponent(Component component)
+	public Component removeComponent(Component component)
 	{
 		this.components.remove(component);
+		return component;
 	}
 	
 	

@@ -1,4 +1,4 @@
-package smug;
+package jsmug;
 
 import com.badlogic.gdx.Gdx;
 
@@ -81,6 +81,13 @@ public class Input
 		return new Vector(this.inputHandler.getMouseX(), Renderer.getInstance().getScreenHeight() - this.inputHandler.getMouseY());
 	}
 	
+	public float getMousePositionX()
+	{
+		return this.inputHandler.getMouseX();
+	}
 	
-	
+	public float getMousePositionY()
+	{
+		return Renderer.getInstance().getScreenHeight() - this.inputHandler.getMouseY();
+	}
 }

@@ -1,4 +1,4 @@
-package smug;
+package jsmug;
 
 import com.badlogic.gdx.InputProcessor;
 
