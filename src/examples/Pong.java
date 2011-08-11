@@ -1,9 +1,9 @@
-package examples.pong;
+package examples;
 
+import jsmug.Core;
+import jsmug.Game;
+import jsmug.GameObject;
 import jsmug.Smug;
-import jsmug.core.Core;
-import jsmug.core.Game;
-import jsmug.gameobject.GameObject;
 import jsmug.graphics.Sprite;
 import jsmug.graphics.Text;
 import jsmug.input.Input;
