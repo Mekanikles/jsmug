@@ -1,14 +1,25 @@
 package examples.pong;
 
-import jsmug.*;
-import jsmug.Input.Keys;
+import jsmug.Smug;
+import jsmug.core.Core;
+import jsmug.core.Game;
+import jsmug.gameobject.GameObject;
+import jsmug.graphics.Sprite;
+import jsmug.graphics.Text;
+import jsmug.input.Input;
+import jsmug.input.Input.Keys;
+import jsmug.physics.Physics;
+import jsmug.physics.BoxCollider;
+import jsmug.resources.Resources;
+import jsmug.utils.Vector;
+
 
 
 public class Pong extends Game
-{	
+{
 	public static void main(String[] argv)
 	{
-		Engine.getInstance().runGame(new Pong());
+		Smug.runGame(new Pong());
 	}
 	
 	public Pong()
@@ -26,10 +37,10 @@ public class Pong extends Game
 	private GameObject net;
 	
 	private GameObject p1Score;
-	private TextDrawable p1ScoreText;
+	private Text p1ScoreText;
 	private int p1Points = 0;
 	private GameObject p2Score;
-	private TextDrawable p2ScoreText;
+	private Text p2ScoreText;
 	private int p2Points = 0;
 	
 	
@@ -40,40 +51,40 @@ public class Pong extends Game
 	
 	private Vector ballSpeed;
 	
-	
 	public void start()
 	{
 		Resources.getInstance().setResourcePath("data/pong/");
 		
 		this.paddles[0] = new GameObject(new Vector(16, 300));
-		this.paddles[0].addComponent(new TextureDrawable(16, 96));
-		this.paddles[0].addComponent(new RectangleCollider(16, 96));
+		this.paddles[0].addComponent(new Sprite(16, 96));
+		this.paddles[0].addComponent(new BoxCollider(16, 96));
 		this.paddles[1] = new GameObject(new Vector(800 - 16, 300));
-		this.paddles[1].addComponent(new TextureDrawable(16, 96));
-		this.paddles[1].addComponent(new RectangleCollider(16, 96));
+		this.paddles[1].addComponent(new Sprite(16, 96));
+		this.paddles[1].addComponent(new BoxCollider(16, 96));
 		this.ball = new GameObject(new Vector(400, 300));
-		this.ball.addComponent(new TextureDrawable(16, 16));
-		this.ball.addComponent(new RectangleCollider(16, 16));
+		this.ball.addComponent(new Sprite(16, 16));
+		this.ball.addComponent(new BoxCollider(16, 16));
 		
 		this.net = new GameObject(new Vector(400, 300));
-		this.net.addComponent(new TextureDrawable(8, 600));
+		this.net.addComponent(new Sprite(8, 600));
 		
 		this.p1Score = new GameObject(new Vector(400 - 64, 600 - 64));
-		this.p1ScoreText = (TextDrawable)this.p1Score.addComponent(new TextDrawable(Resources.getInstance().getFont("font"), "0"));
+		this.p1ScoreText = (Text)this.p1Score.addComponent(new Text(Resources.getInstance().getFont("font"), "0"));
 		this.p1ScoreText.setTextSize(64.0f);
 		
+		
 		this.p2Score = new GameObject(new Vector(400 + 64, 600 - 64));
-		this.p2ScoreText = (TextDrawable)this.p2Score.addComponent(new TextDrawable(Resources.getInstance().getFont("font"), "0"));
+		this.p2ScoreText = (Text)this.p2Score.addComponent(new Text(Resources.getInstance().getFont("font"), "0"));
 		this.p2ScoreText.setTextSize(64.0f);
 		
 		this.topWall = new GameObject(new Vector(400, 600 + 32));
-		this.topWall.addComponent(new RectangleCollider(800, 64));
+		this.topWall.addComponent(new BoxCollider(800, 64));
 		this.bottomWall = new GameObject(new Vector(400, -32));
-		this.bottomWall.addComponent(new RectangleCollider(800, 64));
+		this.bottomWall.addComponent(new BoxCollider(800, 64));
 		this.leftWall = new GameObject(new Vector(-32, 300));
-		this.leftWall.addComponent(new RectangleCollider(64, 600));
+		this.leftWall.addComponent(new BoxCollider(64, 600));
 		this.rightWall = new GameObject(new Vector(800 + 32, 300));
-		this.rightWall.addComponent(new RectangleCollider(64, 600));		
+		this.rightWall.addComponent(new BoxCollider(64, 600));		
 		
 		double i = Math.random() * 360.0f;
 		this.ballSpeed = new Vector(Math.cos(i) * 8.0f, Math.sin(i) * 4.0f);
