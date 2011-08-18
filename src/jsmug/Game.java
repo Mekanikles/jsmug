@@ -48,7 +48,7 @@ public class Game implements ApplicationListener
 
 		if(this.time - lastFpsUpdate >= 1.0f)
 		{
-			System.out.print(this.name + ", fps: " + this.fpsCounter + "\n");
+			//System.out.print(this.name + ", fps: " + this.fpsCounter + "\n");
 			this.fpsCounter = 0;
 			this.lastFpsUpdate = this.time;
 		}

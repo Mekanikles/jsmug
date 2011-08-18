@@ -1,5 +1,7 @@
 package jsmug.graphics;
 
+import org.lwjgl.opengl.GL11;
+
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import jsmug.GameObject;
@@ -61,5 +63,21 @@ public class Sprite extends Drawable
 		this.sprite.setPosition(this.getGameObject().getPositionX() - this.sprite.getOriginX(), 
 				this.getGameObject().getPositionY() - this.sprite.getOriginY());
 		this.sprite.draw(batch);
+	}
+	
+	public void drawDebug()
+	{
+		Rectangle rect = new Rectangle(this.getGameObject().getPositionX()  - this.sprite.getOriginX(), 
+				this.getGameObject().getPositionY()  - this.sprite.getOriginY(), 
+				this.sprite.getWidth() * this.sprite.getScaleX(), 
+				this.sprite.getHeight() * this.sprite.getScaleY());
+		GL11.glBegin(GL11.GL_LINE_LOOP);
+		{
+			GL11.glVertex2f(rect.getV0().getX(), rect.getV0().getY());
+			GL11.glVertex2f(rect.getV1().getX(), rect.getV0().getY());
+			GL11.glVertex2f(rect.getV1().getX(), rect.getV1().getY());
+			GL11.glVertex2f(rect.getV0().getX(), rect.getV1().getY());
+		}
+		GL11.glEnd();
 	}
 }

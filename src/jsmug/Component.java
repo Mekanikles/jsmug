@@ -19,6 +19,11 @@ public abstract class Component
 	
 	public void detach()
 	{
-		//this.gameObject.removeComponent(this.getClass());
+		this.gameObject.removeComponent(this.getClass().cast(this));
+	}
+	
+	public void drawDebug()
+	{
+		
 	}
 }

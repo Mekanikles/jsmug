@@ -38,10 +38,10 @@ public class Pong extends Game
 	
 	private GameObject p1Score;
 	private Text p1ScoreText;
-	private int p1Points = 0;
+	private int p1Points = 9;
 	private GameObject p2Score;
 	private Text p2ScoreText;
-	private int p2Points = 0;
+	private int p2Points = 9;
 	
 	
 	private GameObject leftWall;
@@ -53,7 +53,7 @@ public class Pong extends Game
 	
 	public void start()
 	{
-		Resources.getInstance().setResourcePath("data/pong/");
+		Resources.getInstance().setResourcePath("data/");
 		
 		this.paddles[0] = new GameObject(new Vector(16, 300));
 		this.paddles[0].addComponent(new Sprite(16, 96));
@@ -68,14 +68,13 @@ public class Pong extends Game
 		this.net = new GameObject(new Vector(400, 300));
 		this.net.addComponent(new Sprite(8, 600));
 		
-		this.p1Score = new GameObject(new Vector(400 - 64, 600 - 64));
-		this.p1ScoreText = (Text)this.p1Score.addComponent(new Text(Resources.getInstance().getFont("font"), "0"));
-		this.p1ScoreText.setTextSize(64.0f);
+		this.p1Score = new GameObject(new Vector(400 - 16, 600 - 64));
+		this.p1ScoreText = (Text)this.p1Score.addComponent(
+				new Text(Resources.getInstance().getFont("font"), "" + this.p1Points, 64.0f, Text.Anchor.MIDDLECENTER));
 		
-		
-		this.p2Score = new GameObject(new Vector(400 + 64, 600 - 64));
-		this.p2ScoreText = (Text)this.p2Score.addComponent(new Text(Resources.getInstance().getFont("font"), "0"));
-		this.p2ScoreText.setTextSize(64.0f);
+		this.p2Score = new GameObject(new Vector(400 + 16, 600 - 64));
+		this.p2ScoreText = (Text)this.p2Score.addComponent(
+				new Text(Resources.getInstance().getFont("font"), "" + this.p2Points, 64.0f, Text.Anchor.BOTTOMLEFT));
 		
 		this.topWall = new GameObject(new Vector(400, 600 + 32));
 		this.topWall.addComponent(new BoxCollider(800, 64));

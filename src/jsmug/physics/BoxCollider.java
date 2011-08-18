@@ -1,5 +1,7 @@
 package jsmug.physics;
 
+import org.lwjgl.opengl.GL11;
+
 import jsmug.Component;
 import jsmug.utils.Rectangle;
 import jsmug.utils.Vector;
@@ -20,6 +22,19 @@ public class BoxCollider extends Collider
 	public Rectangle getRectangle()
 	{
 		return rect;
+	}
+	
+	public void drawDebug()
+	{
+		Rectangle rect = this.rect.add(getGameObject().getPosition());
+		GL11.glBegin(GL11.GL_LINE_LOOP);
+		{
+			GL11.glVertex2f(rect.getV0().getX(), rect.getV0().getY());
+			GL11.glVertex2f(rect.getV1().getX(), rect.getV0().getY());
+			GL11.glVertex2f(rect.getV1().getX(), rect.getV1().getY());
+			GL11.glVertex2f(rect.getV0().getX(), rect.getV1().getY());
+		}
+		GL11.glEnd();
 	}
 	
 }

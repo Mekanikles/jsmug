@@ -15,7 +15,6 @@ public class GameObject
 
 	private HashMap<Class, Script> scripts = new HashMap<Class, Script>();
 	
-	
 	public GameObject()
 	{
 		this.position = Vector.zero;
@@ -26,6 +25,11 @@ public class GameObject
 	{
 		this.position = position;
 		Core.getInstance().addGameObject(this);		
+	}
+	
+	public GameObject(float posX, float posY)
+	{
+		this(new Vector(posX, posY));		
 	}
 	
 	public void setPosition(Vector position) { this.position = position; }
@@ -39,39 +43,69 @@ public class GameObject
 	{
 		this.position.addEquals(movement);
 	}
+
+	public void removeComponent(Drawable drawable) { this.drawable = null;}
+	public void removeComponent(Collider collider) { this.drawable = null;}
+	public void removeComponent(Script script)
+	{
+		while (this.scripts.values().remove(script));
+	}
+	
+	public void removeComponent(Component component)
+	{
+		if (component instanceof Script)
+			this.removeComponent((Script)component);
+		else if (component instanceof Drawable)
+			this.removeComponent((Drawable)component);
+		else if (component instanceof Collider)
+			this.removeComponent((Collider)component);
+	}
+	
+	public Component getComponent(Class c)
+	{
+		if (!Component.class.isAssignableFrom(c))
+			return null;
+		
+		if (Script.class.isAssignableFrom(c))
+			return (Component)this.getScript(c);
+		
+		if (Drawable.class.isAssignableFrom(c))
+			return this.getDrawable();
+		
+		if (Collider.class.isAssignableFrom(c))
+			return this.getCollider();
+		
+		return null;
+	}
+	
 	
 	public Script getScript(Class c)
 	{
+		if (!Script.class.isAssignableFrom(c))
+			return null;
 		if (this.scripts.containsKey(c))
 			return this.scripts.get(c);
 		return null;
 	}
 	
-	void removeComponent(Drawable drawable) { this.drawable = null;}
-	void removeComponent(Collider collider) { this.drawable = null;}
-	
-	void removeComponent(Script script)
-	{
-		while (this.scripts.values().remove(script));
-	}
+	public Drawable getDrawable() { return this.drawable; }
+	public Collider getCollider() { return this.collider; }
 	
 	public Script addComponent(Script script)
 	{
 		Class c = script.getClass();
-		System.out.print("c: " + c + "\n");
 		for (Class hc :  this.scripts.keySet())
 		{
 			System.out.print("    hc: " + hc + "\n");
 			if (hc.isAssignableFrom(c))
 			{
-				System.out.print("Error: script of type: " + hc + " is already added.");
+				System.out.print("Error: script of type: " + hc + " is already added.\n");
 				return null;
 			}
 		}
 		
 		while(true)
 		{
-			System.out.print("    while c: " + c + "\n");
 			if (c.equals(Script.class))
 				break;
 				
@@ -87,7 +121,7 @@ public class GameObject
 	{
 		if (this.drawable != null)
 		{
-			System.out.print("Error: remove old drawable before adding: " + this.drawable);
+			System.out.print("Error: remove old drawable before adding: " + this.drawable + "\n");
 			return null;
 		}
 		this.drawable = drawable;
@@ -98,15 +132,12 @@ public class GameObject
 	public Collider addComponent(Collider collider)
 	{
 		if (this.drawable != null)
-			System.out.print("Error: remove old collider before adding: " + this.collider);
+			System.out.print("Error: remove old collider before adding: " + this.collider + "\n");
 		this.collider = collider;
 		((Component)collider).attachTo(this);
 		return collider;
 	}
 	
-	
-	public Drawable getDrawable() { return this.drawable; }
-	public Collider getCollider() { return this.collider; }
 	
 	
 }

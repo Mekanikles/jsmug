@@ -43,19 +43,15 @@ public class Renderer
 			GL11.glColor3f(0.0f, 1.0f, 0.0f);
 			for (GameObject gameObject : Core.getInstance().getScene().getGameObjects())
 			{
+				GL11.glColor4f(0.5f, 1.0f, 0.5f, 0.7f);
 				Collider c = gameObject.getCollider();
 				if (c != null)
-				{
-					Rectangle rect = ((BoxCollider)c).getRectangle().add(c.getGameObject().getPosition());
-					GL11.glBegin(GL11.GL_LINE_LOOP);
-					{
-						GL11.glVertex2f(rect.getV0().getX(), rect.getV0().getY());
-						GL11.glVertex2f(rect.getV1().getX(), rect.getV0().getY());
-						GL11.glVertex2f(rect.getV1().getX(), rect.getV1().getY());
-						GL11.glVertex2f(rect.getV0().getX(), rect.getV1().getY());
-					}
-					GL11.glEnd();
-				}
+					c.drawDebug();
+				GL11.glColor4f(1.0f, 0.5f, 0.5f, 0.7f);
+				Drawable d = gameObject.getDrawable();
+				if (d != null)
+					d.drawDebug();
+				
 			}
 		}	
 	}

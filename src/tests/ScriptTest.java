@@ -46,7 +46,7 @@ public class ScriptTest extends Game
 		go.addComponent(new Script2());
 		go.addComponent(new Script3());
 	
-		go.getScript(Script1.class);
+		go.removeComponent(go.getScript(Script1.class));
 		
 		
 		

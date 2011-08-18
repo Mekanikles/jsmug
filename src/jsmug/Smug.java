@@ -13,17 +13,26 @@ public class Smug
 	public static Resources resources;
 	public static Input input;
 	public static Physics physics;
+
+	private static boolean initialized = false;
 	
-	public static void runGame(Game game)
+	public static void initialize()
 	{
+		if (initialized)
+			return;
+		
 		core = Core.getInstance();
 		graphics = Graphics.getInstance();
 		resources = Resources.getInstance();
 		input = Input.getInstance();
 		physics = Physics.getInstance();
-		
-		core.runGame(game);
 	}
 	
 	
+	public static void runGame(Game game)
+	{
+		if (!initialized)
+			return;
+		core.runGame(game);
+	}
 }
