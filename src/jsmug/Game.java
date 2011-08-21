@@ -14,11 +14,10 @@ public class Game implements ApplicationListener
 	
 	int fpsCounter = 0;	
 
-	private double time = 0.0f;
-	private double nextUpdateTime = 0.0f;
-	private double lastRenderTime = 0.0f;
-	private double lastFpsUpdate = 0.0f;
-	private double logicLength = 1.0f / Core.LOGICS_PER_SEC;
+	private float nextUpdateTime = 0.0f;
+	private float lastRenderTime = 0.0f;
+	private float lastFpsUpdate = 0.0f;
+	private float logicLength = 1.0f / Core.LOGICS_PER_SEC;
 	
 	
 	@Override
@@ -44,16 +43,17 @@ public class Game implements ApplicationListener
 	@Override
 	public void render()
 	{
-		this.time += Gdx.graphics.getDeltaTime(); 
-
-		if(this.time - lastFpsUpdate >= 1.0f)
+		Time.getInstance().update(Gdx.graphics.getDeltaTime()); 
+		float time = Time.getInstance().getTime();
+		
+		if(time - lastFpsUpdate >= 1.0f)
 		{
 			//System.out.print(this.name + ", fps: " + this.fpsCounter + "\n");
 			this.fpsCounter = 0;
-			this.lastFpsUpdate = this.time;
+			this.lastFpsUpdate = time;
 		}
 		
-		if(this.time >= this.nextUpdateTime + this.logicLength)
+		if(time >= this.nextUpdateTime + this.logicLength)
 		{
 			this.nextUpdateTime += this.logicLength;
 			
@@ -62,7 +62,7 @@ public class Game implements ApplicationListener
 		
 		
 		Graphics.getInstance().render();
-		this.lastRenderTime = this.time;
+		this.lastRenderTime = time;
 		this.fpsCounter++;	
 	}
 

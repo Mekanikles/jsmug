@@ -13,6 +13,7 @@ public class Smug
 	public static Resources resources;
 	public static Input input;
 	public static Physics physics;
+	public static Time time;
 
 	private static boolean initialized = false;
 	
@@ -26,6 +27,9 @@ public class Smug
 		resources = Resources.getInstance();
 		input = Input.getInstance();
 		physics = Physics.getInstance();
+		time = Time.getInstance();
+		
+		initialized = true;
 	}
 	
 	

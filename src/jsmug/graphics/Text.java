@@ -10,6 +10,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import jsmug.Smug;
 import jsmug.utils.Rectangle;
+import jsmug.utils.Vector;
 
 public class Text extends Drawable
 {
@@ -66,6 +67,7 @@ public class Text extends Drawable
 	public void setAnchor(Anchor anchor)
 	{
 		this.anchor = anchor;
+		this.positionGlyphs();
 		this.updateOffset();
 	}
 	
@@ -155,7 +157,17 @@ public class Text extends Drawable
 				break;
 			default:
 				this.offSetX = 0;
-		}		
+		}
+		
+		for (int i = 0; i < this.text.length; i++)
+		{
+			if (this.sprites[i] == null)
+				continue;
+			
+			this.sprites[i].setOrigin(this.sprites[i].getOriginX() - this.offSetX / this.scale,
+					this.sprites[i].getOriginY() - this.offSetY / this.scale);
+		}	
+		
 	}
 	
 	private void updateScale(float size)
@@ -174,8 +186,10 @@ public class Text extends Drawable
 	{
 		for (com.badlogic.gdx.graphics.g2d.Sprite sprite : this.sprites)
 		{
-			sprite.setPosition(this.getGameObject().getPositionX() + this.offSetX - sprite.getOriginX(), 
-					this.getGameObject().getPositionY() + this.offSetY - sprite.getOriginY());
+			sprite.setPosition(this.getGameObject().getPositionX() - sprite.getOriginX(), 
+					this.getGameObject().getPositionY() - sprite.getOriginY());
+			sprite.setRotation(this.getGameObject().getRotation());
+			sprite.setScale(this.getGameObject().getScaleX() * this.scale, this.getGameObject().getScaleY() * this.scale);
 			sprite.draw(batch);
 		}
 	}
@@ -187,16 +201,27 @@ public class Text extends Drawable
 			if (sprite == null)
 					continue;
 			
-			Rectangle rect = new Rectangle(this.getGameObject().getPositionX() + this.offSetX - sprite.getOriginX() * sprite.getScaleX(), 
-					this.getGameObject().getPositionY() + this.offSetY - sprite.getOriginY() * sprite.getScaleY(), 
-					sprite.getWidth() * sprite.getScaleX(), 
-					sprite.getHeight() * sprite.getScaleY());
+			float sx = sprite.getScaleX();
+			float sy = sprite.getScaleY();
+			
+			Vector ox = new Vector(-sprite.getOriginX() * sx, -sprite.getOriginY() * sy);
+			ox.rotate(this.getGameObject().getRotation());
+			ox = ox.add(new Vector(this.getGameObject().getPositionX(), this.getGameObject().getPositionY()));
+			Vector vx = new Vector(sprite.getWidth() * sx, 0);
+			vx.rotate(this.getGameObject().getRotation());
+			vx = vx.add(ox);
+			Vector vy = new Vector(0, sprite.getHeight() * sx);
+			vy.rotate(this.getGameObject().getRotation());
+			
+			Vector vxy = vx.add(vy);
+			vy = vy.add(ox);
+			
 			GL11.glBegin(GL11.GL_LINE_LOOP);
 			{
-				GL11.glVertex2f(rect.getV0().getX(), rect.getV0().getY());
-				GL11.glVertex2f(rect.getV1().getX(), rect.getV0().getY());
-				GL11.glVertex2f(rect.getV1().getX(), rect.getV1().getY());
-				GL11.glVertex2f(rect.getV0().getX(), rect.getV1().getY());
+				GL11.glVertex2f(ox.getX(), ox.getY());
+				GL11.glVertex2f(vy.getX(), vy.getY());
+				GL11.glVertex2f(vxy.getX(), vxy.getY());
+				GL11.glVertex2f(vx.getX(), vx.getY());
 			}
 			GL11.glEnd();
 		}

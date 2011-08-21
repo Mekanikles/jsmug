@@ -52,4 +52,13 @@ public class Vector
 		this.v[1] = -this.v[1]; return this;
 	}
 	
+	public Vector rotate(float angle)
+	{
+		angle = angle * ((float)Math.PI / 180.0f);
+		float t = this.v[0]; 
+		this.v[0] = (float)(Math.cos(angle) * t - Math.sin(angle) * this.v[1]);
+		this.v[1] = (float)(Math.sin(angle) * t + Math.cos(angle) * this.v[1]);
+		return this;
+	}
+	
 }

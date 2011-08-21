@@ -8,7 +8,9 @@ import jsmug.utils.Vector;
 
 public class GameObject
 {
-	Vector position;
+	Vector position = new Vector(0.0f, 0.0f);
+	float rotation = 0.0f;
+	Vector scale = new Vector(1.0f, 1.0f);
 
 	private Drawable drawable;
 	private Collider collider;
@@ -21,16 +23,17 @@ public class GameObject
 		Core.getInstance().addGameObject(this);		
 	}
 	
-	public GameObject(Vector position)
+	public GameObject(Vector position, float rotation, Vector scale)
 	{
 		this.position = position;
+		this.rotation = rotation;
+		this.scale = scale;
 		Core.getInstance().addGameObject(this);		
 	}
 	
-	public GameObject(float posX, float posY)
-	{
-		this(new Vector(posX, posY));		
-	}
+	public GameObject(float posX, float posY) {this(new Vector(posX, posY), 0, new Vector(0, 0));}
+	public GameObject(Vector pos) {this(pos, 0, new Vector(0, 0));}
+	
 	
 	public void setPosition(Vector position) { this.position = position; }
 	public void setPositionX(float x){ this.position.setX(x); }	
@@ -38,6 +41,17 @@ public class GameObject
 	public Vector getPosition() { return this.position; }
 	public float getPositionX() { return this.position.getX(); }	
 	public float getPositionY() { return this.position.getY(); }	
+	
+	public void setRotation(float angle) { this.rotation = angle; }
+	public float getRotation() { return this.rotation; }
+	
+	public void setScale(Vector scale) {this.scale = scale;}
+	public Vector getScale() {return this.scale; }
+	public float getScaleX() {return this.scale.getX(); }
+	public float getScaleY() {return this.scale.getY(); }
+	public void setScale(float scale) {this.setScale(new Vector(scale, scale));}
+	
+	
 	
 	public void move(Vector movement)
 	{

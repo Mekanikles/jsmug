@@ -41,8 +41,8 @@ public class TextTest extends Game
 	{
 		for (GameObject go : this.gos)
 		{
-			go.setRotation((float)Math.sin(f) * 15);
-			go.setScale(0.7f + (float)Math.sin(f) * 0.3f);
+			go.setRotation((float)Math.sin(f) * 7.5f);
+			go.setScale(0.9f + (float)Math.sin(f) * 0.1f);
 		}
 		
 		this.f += Smug.time.getDeltaTime();
