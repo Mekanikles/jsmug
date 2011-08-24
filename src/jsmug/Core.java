@@ -36,7 +36,8 @@ public class Core
 		new LwjglApplication(this.game, game.name, game.width, game.height, game.fullscreen);		
 
 		Input.getInstance().init();
-		Graphics.getInstance().init(game.width, game.height);	
+		Graphics.getInstance().init(game.width, game.height);
+                Smug.audio.init();
 	}
 
 	public Scene getScene()

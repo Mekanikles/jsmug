@@ -62,6 +62,7 @@ public class Game implements ApplicationListener
 		
 		
 		Graphics.getInstance().render();
+                Smug.audio.update(Gdx.graphics.getDeltaTime(), new double[]{1.0});
 		this.lastRenderTime = time;
 		this.fpsCounter++;	
 	}
