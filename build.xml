@@ -1,0 +1,72 @@
+<project name="Pyzzlix" default="dist" basedir=".">
+  <description>
+    Action puzzle game inspired by Tetris.
+  </description>
+  <property environment="env"/>
+  <property file="build.properties" />
+  <property file="default.properties" />
+
+  <path id="external.jars">
+    <fileset dir="${gdx.dir}" includes="**/*.jar"/>
+  </path>
+
+  <path id="project.classpath">
+    <pathelement location="${bin.dir}"/>
+    <path refid="external.jars" />
+  </path>
+
+  <target name="init">
+    <mkdir dir="${build.dir}"/>
+    <mkdir dir="${bin.dir}"/>
+    <mkdir dir="${jar.dir}"/>
+    <copy todir="${bin.dir}/data">
+      <fileset dir="${data.dir}">
+      </fileset>
+    </copy>
+  </target>
+
+  <target name="clean">
+    <delete dir="${build.dir}" />
+    <delete dir="${dist.applet.dir}" />
+  </target>
+
+  <target name="cleanall" depends="clean"/>
+
+  <target name="run" depends="build">
+    <java classname="se.nederlag.pyzzlix.PyzzlixDesktop"
+          classpathref="project.classpath"
+          fork="true"
+          spawn="true" />
+  </target>
+
+  <target name="build" depends="init">
+    <javac debug="on"
+    	   includeantruntime="false"
+           debuglevel="${debuglevel}"
+           destdir="${bin.dir}"
+           source="${source}"
+           target="${target}"
+           classpathref="project.classpath">
+      <src path="${src.dir}" />
+    </javac>
+  </target>
+
+  <target name="build-jar" depends="build">
+    <delete file="${jar.file}" />
+    <delete file="${manifest.file}" />
+
+    <manifest file="${manifest.file}" >
+      <attribute name="built-by" value="${user.name}" />
+    </manifest>
+
+    <jar destfile="${jar.file}"
+         basedir="${bin.dir}"
+         manifest="${manifest.file}">
+      <zipgroupfileset dir="${gdx.dir}" includes="**/*.jar" />
+    </jar>
+  </target>
+
+  <target name="dist" depends="build-jar">
+    <copy todir="${dist.dir}" file="${jar.file}" />
+  </target>
+</project>
