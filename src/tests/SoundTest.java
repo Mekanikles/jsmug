@@ -4,9 +4,14 @@
  */
 package tests;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import jsmug.Game;
 import jsmug.Smug;
 import jsmug.audio.Sound;
+import jsmug.audio.WaveFloatChannel;
 
 /**
  *
@@ -19,10 +24,16 @@ public class SoundTest extends Game {
     {
         Smug.resources.setResourcePath("data/");
         
-        sfx = Smug.resources.getSound("pongnew.ogg");
+        sfx = Smug.resources.getSound("pongnew.wav");
         sfx.play();
     }
     
+    @Override
+    public void dispose()
+    {
+        Smug.audio.finish();
+    }
+
     public static void main(String argv[]) {
         Smug.initialize();
         Smug.runGame(new SoundTest());

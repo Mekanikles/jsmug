@@ -99,6 +99,10 @@ public class Files {
 			for(int i=offset; i<length; i++) {
 				if(i < dsts.length) {
 					count += this.input.read(dsts[i].array(), dsts[i].position(), dsts[i].limit()-dsts[i].position());
+                                        
+                                        if(i == offset && count == -1) {
+                                            return -1;
+                                        } 
 				}
 			}
 			
@@ -148,7 +152,7 @@ public class Files {
 
 		@Override
 		protected void implCloseChannel() throws IOException {
-			throw new UnsupportedOperationException("Method not implemented yet!");
+                    this.input.close();
 		}
 		
 		protected void reset() throws FileNotFoundException {

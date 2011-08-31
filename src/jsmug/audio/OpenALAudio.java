@@ -124,13 +124,20 @@ public class OpenALAudio implements Audio, Runnable {
         return null;
     }
     
-    public Sound newSound(String filename, int type) {
-        OggFloatChannel channel = null;
+    public Sound newSound(String filename, int type) {        
+        PCMFloatChannel channel = null;
+        
         try {
-            channel = new OggFloatChannel(Files.internal(filename).getReadChannel());
+            if(filename.endsWith(".ogg")) {
+                channel = new OggFloatChannel(Files.internal(filename).getReadChannel());
+            }
+            else if (filename.endsWith(".wav")) {
+                channel = new WaveFloatChannel(Files.internal(filename).getReadChannel());
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        
         return this.newSound(channel, type);
     }
     
@@ -141,9 +148,14 @@ public class OpenALAudio implements Audio, Runnable {
     }
     
     public Sound newSoundStream(String filename, int type) {
-        OggFloatChannel channel = null;
+        PCMFloatChannel channel = null;
         try {
-            channel = new OggFloatChannel(Files.internal(filename).getReadChannel());
+            if(filename.endsWith(".ogg")) {
+                channel = new OggFloatChannel(Files.internal(filename).getReadChannel());
+            }
+            else if (filename.endsWith(".wav")) {
+                channel = new WaveFloatChannel(Files.internal(filename).getReadChannel());
+            }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
@@ -437,7 +449,7 @@ public class OpenALAudio implements Audio, Runnable {
                 }
             } else if (sound.isPlaying() && !sound.isStream()) {
                 int state = AL10.alGetSourcei(source, AL10.AL_SOURCE_STATE);
-                int buffer = AL10.alGetSourcei(source, AL10.AL_BUFFER);
+                int buffer = sound.getBuffer(); //AL10.alGetSourcei(source, AL10.AL_BUFFER);
 
                 // If the buffer is out and stream is at end, stop sound
                 if (state == AL10.AL_STOPPED && !sound.isLooping()) {

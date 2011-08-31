@@ -10,6 +10,7 @@ public final class PCMUtils {
 	private PCMUtils() {		
 	}
 	
+        // Convert a float stream to byte stream with respect to system endian
 	public static void convertFloatToByte(FloatBuffer src, ByteBuffer dst) {
 		float next;
 		
@@ -36,7 +37,31 @@ public final class PCMUtils {
 	}
 
 	
-	// Copy src to dst with respect to volume fade
+	public static void convertByteToFloat(ByteBuffer src, FloatBuffer dst) {
+		byte next_l;
+                byte next_h;
+                long val;
+                double dval;
+		
+		while(src.hasRemaining()) {
+                    next_h = src.get();
+                    next_l = src.get();
+                   
+                    if (PCMUtils.bigEndian) {
+                        val = (next_h << 8) + next_l;
+                    } else {
+                        val = (next_l << 8) + next_h;
+                    }
+                    
+                    val = val + 32768;
+                    dval = val/65535.0;
+                    dval = dval*2.0;
+                    
+                    dst.put((float)(dval-1.0));
+		}
+	}
+        
+        // Copy src to dst with respect to volume fade
 	public static void copyBuffer(FloatBuffer src, FloatBuffer dst, double startVolume, double endVolume, long volumeSamples, int channels) {
 		int limit = src.limit();
 		double srcValue, volume;
