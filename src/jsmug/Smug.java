@@ -1,7 +1,7 @@
 package jsmug;
 
 import jsmug.audio.Audio;
-import jsmug.audio.OpenALAudio;
+import jsmug.audio.Audio;
 import jsmug.graphics.Graphics;
 import jsmug.input.Input;
 import jsmug.physics.Physics;
@@ -30,7 +30,7 @@ public class Smug
 		input = Input.getInstance();
 		physics = Physics.getInstance();
 		time = Time.getInstance();
-                audio = new OpenALAudio();
+                audio = new Audio();
 		
 		initialized = true;
 	}

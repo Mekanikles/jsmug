@@ -3,10 +3,14 @@ package jsmug.audio;
 import java.nio.FloatBuffer;
 import java.nio.channels.Channel;
 
-public interface PCMFloatChannel extends Channel, PCMInfo {
+public interface PCMFloatChannel extends Channel {
 	public void close();
 
-	public long position();
+        public int getSampleRate();
+	public int getChannels();
+	public int getBits();
+
+        public long position();
 	public PCMFloatChannel position(long position);
 
 	public long read(FloatBuffer dst);
