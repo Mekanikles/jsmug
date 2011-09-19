@@ -1,7 +1,6 @@
 package tests;
 
 import jsmug.SmugApplication;
-import jsmug.Game;
 import jsmug.GameObject;
 import jsmug.Smug;
 import jsmug.graphics.Text;
@@ -18,7 +17,8 @@ public class TextTest extends SmugApplication
 	{
 		Smug.initialize();
 		Smug.runGame(new TextTest());
-	}
+                Smug.destroy();
+        }
 	
 	public TextTest()
 	{

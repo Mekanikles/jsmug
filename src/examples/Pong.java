@@ -20,6 +20,7 @@ public class Pong extends SmugApplication
 	{
                 Smug.initialize();
 		Smug.runGame(new Pong());
+                Smug.destroy();
 	}
 	
 	public Pong()

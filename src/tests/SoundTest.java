@@ -9,7 +9,6 @@ import java.io.FileNotFoundException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import jsmug.Debug;
-import jsmug.Game;
 import jsmug.Smug;
 import jsmug.SmugApplication;
 import jsmug.audio.Sound;
@@ -30,14 +29,9 @@ public class SoundTest extends SmugApplication {
         sfx.play();
     }
     
-    @Override
-    public void dispose()
-    {
-        Smug.audio.finish();
-    }
-
     public static void main(String argv[]) {
         Smug.initialize();
         Smug.runGame(new SoundTest());
+        Smug.destroy();
     }
 }

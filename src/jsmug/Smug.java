@@ -37,6 +37,9 @@ public class Smug
 		initialized = true;
 	}
 	
+        public static void destroy() {
+            Smug.audio.finish();
+        }
 	
 	public static void runGame(SmugApplication app)
 	{

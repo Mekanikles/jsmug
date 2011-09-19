@@ -4,14 +4,14 @@
  */
 package editor;
 
-import jsmug.Game;
 import jsmug.Smug;
+import jsmug.SmugApplication;
 
 /**
  *
  * @author anders
  */
-public class Editor extends Game {
+public class Editor extends SmugApplication {
     public static void main(String[] argv)
     {
         Smug.initialize();

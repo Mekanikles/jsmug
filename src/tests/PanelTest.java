@@ -1,7 +1,6 @@
 package tests;
 
 import jsmug.SmugApplication;
-import jsmug.Game;
 import jsmug.GameObject;
 import jsmug.Smug;
 import jsmug.graphics.Panel;
@@ -18,6 +17,7 @@ public class PanelTest extends SmugApplication
 	{
 		Smug.initialize();
 		Smug.runGame(new PanelTest());
+                Smug.destroy();
 	}
 	
 	public PanelTest()
