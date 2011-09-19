@@ -1,7 +1,6 @@
 package examples;
 
-import jsmug.Core;
-import jsmug.Game;
+import jsmug.SmugApplication;
 import jsmug.GameObject;
 import jsmug.Smug;
 import jsmug.graphics.Sprite;
@@ -15,10 +14,11 @@ import jsmug.utils.Vector;
 
 
 
-public class Pong extends Game
+public class Pong extends SmugApplication
 {
 	public static void main(String[] argv)
 	{
+                Smug.initialize();
 		Smug.runGame(new Pong());
 	}
 	
@@ -51,61 +51,72 @@ public class Pong extends Game
 	
 	private Vector ballSpeed;
 	
+    @Override
 	public void start()
 	{
-		Resources.getInstance().setResourcePath("data/");
+		Smug.resources.setResourcePath("data/");
 		
-		this.paddles[0] = new GameObject(new Vector(16, 300));
+		this.paddles[0] = Smug.newGameObject(new Vector(16, 300));
 		this.paddles[0].addComponent(new Sprite(16, 96));
 		this.paddles[0].addComponent(new BoxCollider(16, 96));
-		this.paddles[1] = new GameObject(new Vector(800 - 16, 300));
+		this.paddles[1] = Smug.newGameObject(new Vector(800 - 16, 300));
 		this.paddles[1].addComponent(new Sprite(16, 96));
 		this.paddles[1].addComponent(new BoxCollider(16, 96));
-		this.ball = new GameObject(new Vector(400, 300));
+		this.ball = Smug.newGameObject(new Vector(400, 300));
 		this.ball.addComponent(new Sprite(16, 16));
 		this.ball.addComponent(new BoxCollider(16, 16));
 		
-		this.net = new GameObject(new Vector(400, 300));
+		this.net = Smug.newGameObject(new Vector(400, 300));
 		this.net.addComponent(new Sprite(8, 600));
 		
-		this.p1Score = new GameObject(new Vector(400 - 16, 600 - 64));
+		this.p1Score = Smug.newGameObject(new Vector(400 - 16, 600 - 64));
 		this.p1ScoreText = (Text)this.p1Score.addComponent(
-				new Text(Resources.getInstance().getFont("font"), "" + this.p1Points, 64.0f, Text.Anchor.MIDDLECENTER));
+				new Text(Smug.resources.getFont("font"), "" + this.p1Points, 64.0f, Text.Anchor.MIDDLECENTER));
 		
-		this.p2Score = new GameObject(new Vector(400 + 16, 600 - 64));
+		this.p2Score = Smug.newGameObject(new Vector(400 + 16, 600 - 64));
 		this.p2ScoreText = (Text)this.p2Score.addComponent(
-				new Text(Resources.getInstance().getFont("font"), "" + this.p2Points, 64.0f, Text.Anchor.BOTTOMLEFT));
+				new Text(Smug.resources.getFont("font"), "" + this.p2Points, 64.0f, Text.Anchor.BOTTOMLEFT));
 		
-		this.topWall = new GameObject(new Vector(400, 600 + 32));
+		this.topWall = Smug.newGameObject(new Vector(400, 600 + 32));
 		this.topWall.addComponent(new BoxCollider(800, 64));
-		this.bottomWall = new GameObject(new Vector(400, -32));
+		this.bottomWall = Smug.newGameObject(new Vector(400, -32));
 		this.bottomWall.addComponent(new BoxCollider(800, 64));
-		this.leftWall = new GameObject(new Vector(-32, 300));
+		this.leftWall = Smug.newGameObject(new Vector(-32, 300));
 		this.leftWall.addComponent(new BoxCollider(64, 600));
-		this.rightWall = new GameObject(new Vector(800 + 32, 300));
+		this.rightWall = Smug.newGameObject(new Vector(800 + 32, 300));
 		this.rightWall.addComponent(new BoxCollider(64, 600));		
 		
 		double i = Math.random() * 360.0f;
 		this.ballSpeed = new Vector(Math.cos(i) * 8.0f, Math.sin(i) * 4.0f);
-		
+                
+                this.addGameObject(this.paddles[0]);
+                this.addGameObject(this.paddles[1]);
+                this.addGameObject(this.ball);
+                this.addGameObject(this.net);
+                this.addGameObject(this.p1Score);
+                this.addGameObject(this.p2Score);
+                this.addGameObject(this.topWall);
+                this.addGameObject(this.bottomWall);
+                this.addGameObject(this.leftWall);
+                this.addGameObject(this.rightWall);
 	}
 	
 	public void update()
 	{
-		if (Input.getInstance().getKey(Input.Keys.UP))
+		if (Smug.input.getKey(Input.Keys.UP))
 		{
 			this.paddles[0].move(new Vector(0, 5));
 		}
-		if (Input.getInstance().getKey(Input.Keys.DOWN))
+		if (Smug.input.getKey(Input.Keys.DOWN))
 		{
 			this.paddles[0].move(new Vector(0, -5));
 		}
 		
-		if (Input.getInstance().getMousePositionY() > this.paddles[1].getPositionY())
+		if (Smug.input.getMousePositionY() > this.paddles[1].getPositionY())
 		{
 			this.paddles[1].move(new Vector(0, 5));
 		}
-		if (Input.getInstance().getMousePositionY() < this.paddles[1].getPositionY())
+		if (Smug.input.getMousePositionY() < this.paddles[1].getPositionY())
 		{
 			this.paddles[1].move(new Vector(0, -5));
 		}
@@ -115,36 +126,36 @@ public class Pong extends Game
 		
 		for (GameObject paddle : this.paddles)
 		{
-			if (Physics.getInstance().collides(paddle, this.bottomWall))
+			if (Smug.physics.collides(paddle, this.bottomWall))
 				paddle.setPositionY(48);
-			else if (Physics.getInstance().collides(paddle, this.topWall))
+			else if (Smug.physics.collides(paddle, this.topWall))
 				paddle.setPositionY(600 - 48);	
 		}	
 		
-		if (Physics.getInstance().collides(this.ball, this.bottomWall))
+		if (Smug.physics.collides(this.ball, this.bottomWall))
 		{
 			this.ball.setPositionY(8);
 			this.ballSpeed.flipY();
 		}
-		else if (Physics.getInstance().collides(this.ball, this.topWall))
+		else if (Smug.physics.collides(this.ball, this.topWall))
 		{
 			this.ball.setPositionY(600 - 8);
 			this.ballSpeed.flipY();
 		}
 		
 		
-		if (Physics.getInstance().collides(this.paddles[0], this.ball))
+		if (Smug.physics.collides(this.paddles[0], this.ball))
 		{
 			this.ball.setPositionX(this.paddles[0].getPositionX() + 16);
 			this.ballSpeed.flipX();
 		}
-		else if (Physics.getInstance().collides(this.paddles[1], this.ball))
+		else if (Smug.physics.collides(this.paddles[1], this.ball))
 		{
 			this.ball.setPositionX(this.paddles[1].getPositionX() - 16);
 			this.ballSpeed.flipX();
 		}
 		
-		if (Physics.getInstance().collides(this.ball, this.leftWall))
+		if (Smug.physics.collides(this.ball, this.leftWall))
 		{
 			double i = Math.random() * 360.0f;
 			this.ballSpeed = new Vector(Math.cos(i) * 8.0f, Math.sin(i) * 4.0f);
@@ -153,7 +164,7 @@ public class Pong extends Game
 			this.p2Points ++;
 			this.p2ScoreText.setText(Integer.toString(this.p2Points));
 		}
-		else if (Physics.getInstance().collides(this.ball, this.rightWall))
+		else if (Smug.physics.collides(this.ball, this.rightWall))
 		{
 			double i = Math.random() * 360.0f;
 			this.ballSpeed = new Vector(Math.cos(i) * 8.0f, Math.sin(i) * 4.0f);

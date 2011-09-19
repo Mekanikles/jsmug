@@ -4,12 +4,10 @@ import jsmug.graphics.Graphics;
 import jsmug.utils.Vector;
 
 import com.badlogic.gdx.Gdx;
+import jsmug.Smug;
 
 public class Input
 {
-	private static Input instance;
-	public static Input getInstance() { if (instance == null) instance = new Input(); return instance;}
-	
 	public class Keys
 	{
 		public static final int NUM1 = com.badlogic.gdx.Input.Keys.NUM_1;
@@ -64,7 +62,7 @@ public class Input
 	
 	private InputHandler inputHandler;
 	
-	private Input()
+	public Input()
 	{
 		this.inputHandler = new InputHandler();
 	}
@@ -81,7 +79,7 @@ public class Input
 	
 	public Vector getMousePosition()
 	{
-		return new Vector(this.inputHandler.getMouseX(), Graphics.getInstance().getScreenHeight() - this.inputHandler.getMouseY());
+		return new Vector(this.inputHandler.getMouseX(), Smug.graphics.getScreenHeight() - this.inputHandler.getMouseY());
 	}
 	
 	public float getMousePositionX()
@@ -91,6 +89,6 @@ public class Input
 	
 	public float getMousePositionY()
 	{
-		return Graphics.getInstance().getScreenHeight() - this.inputHandler.getMouseY();
+		return Smug.graphics.getScreenHeight() - this.inputHandler.getMouseY();
 	}
 }

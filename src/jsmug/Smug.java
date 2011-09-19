@@ -2,14 +2,16 @@ package jsmug;
 
 import jsmug.audio.Audio;
 import jsmug.audio.Audio;
+import jsmug.graphics.Camera;
 import jsmug.graphics.Graphics;
 import jsmug.input.Input;
 import jsmug.physics.Physics;
 import jsmug.resources.Resources;
+import jsmug.utils.Vector;
 
 public class Smug
 {
-	public static Core core;
+	public static SmugApplication app;
 	public static Graphics graphics;
 	public static Audio audio;
 	public static Resources resources;
@@ -24,22 +26,48 @@ public class Smug
 		if (initialized)
 			return;
 		
-		core = Core.getInstance();
-		graphics = Graphics.getInstance();
-		resources = Resources.getInstance();
-		input = Input.getInstance();
-		physics = Physics.getInstance();
-		time = Time.getInstance();
+		//app = SmugApplication.getInstance();
+		graphics = new Graphics();
+		resources = new Resources();
+		input = new Input();
+		physics = new Physics();
+		time = new Time();
                 audio = new Audio();
 		
 		initialized = true;
 	}
 	
 	
-	public static void runGame(Game game)
+	public static void runGame(SmugApplication app)
 	{
 		if (!initialized)
 			return;
-		core.runGame(game);
+		
+                Smug.app = app;
+                app.run();
 	}
+        
+        public static Scene newScene() {
+            return new Scene();
+        }
+        
+        public static Camera newCamera() {
+            return new Camera();
+        }
+        
+        public static GameObject newGameObject() {
+            return new GameObject();
+	}
+	
+	public static GameObject newGameObject(Vector position, float rotation, Vector scale) {
+            return new GameObject(position, rotation, scale);
+	}
+	
+	public static GameObject newGameObject(float posX, float posY) {
+            return new GameObject(posX, posY);
+        }
+        
+	public static GameObject newGameObject(Vector pos) {
+            return new GameObject(pos);
+        }
 }

@@ -10,9 +10,6 @@ import jsmug.graphics.Texture;
 
 public class Resources
 {
-	private static Resources instance;
-	public static Resources getInstance() { if (instance == null) instance = new Resources(); return instance;}
-	
 	private Map<String, Texture> textures = new HashMap<String, Texture>();
 	private Map<String, BitmapFont> fonts = new HashMap<String, BitmapFont>();
 	private Map<String, Sound> sounds = new HashMap<String, Sound>();
@@ -25,7 +22,7 @@ public class Resources
 	String fontPath;
 	String fontFileEnding;
 	
-	private Resources()
+	public Resources()
 	{
 		this.dataPath = "data/";
 		this.texturePath = "";

@@ -17,22 +17,22 @@ public class GameObject
 
 	private HashMap<Class, Script> scripts = new HashMap<Class, Script>();
 	
-	public GameObject()
+	GameObject()
 	{
 		this.position = Vector.zero;
-		Core.getInstance().addGameObject(this);		
+		//SmugApplication.getInstance().addGameObject(this);		
 	}
 	
-	public GameObject(Vector position, float rotation, Vector scale)
+	GameObject(Vector position, float rotation, Vector scale)
 	{
 		this.position = position;
 		this.rotation = rotation;
 		this.scale = scale;
-		Core.getInstance().addGameObject(this);		
+		//SmugApplication.getInstance().addGameObject(this);		
 	}
 	
-	public GameObject(float posX, float posY) {this(new Vector(posX, posY), 0, new Vector(0, 0));}
-	public GameObject(Vector pos) {this(pos, 0, new Vector(0, 0));}
+	GameObject(float posX, float posY) {this(new Vector(posX, posY), 0, new Vector(0, 0));}
+	GameObject(Vector pos) {this(pos, 0, new Vector(0, 0));}
 	
 	
 	public void setPosition(Vector position) { this.position = position; }

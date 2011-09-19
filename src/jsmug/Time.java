@@ -2,15 +2,8 @@ package jsmug;
 
 public class Time
 {
-	private static Time instance;
-	public static Time getInstance() { if (instance == null) instance = new Time(); return instance;}
-	
-	
-	
 	private double time;
 	private double deltaTime;
-	
-	private Time() {}
 	
 	public void init()
 	{

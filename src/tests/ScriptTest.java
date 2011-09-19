@@ -1,12 +1,12 @@
 package tests;
 
-import jsmug.Game;
 import jsmug.GameObject;
 import jsmug.Script;
 import jsmug.Smug;
 import examples.Pong;
+import jsmug.SmugApplication;
 
-public class ScriptTest extends Game
+public class ScriptTest extends SmugApplication
 {
 
 	public class Script1 extends Script
@@ -40,18 +40,15 @@ public class ScriptTest extends Game
 	
 	public ScriptTest()
 	{
-		GameObject go = new GameObject();
+		GameObject go = Smug.newGameObject();
 		
 		go.addComponent(new Script1());
 		go.addComponent(new Script2());
 		go.addComponent(new Script3());
 	
 		go.removeComponent(go.getScript(Script1.class));
-		
-		
-		
-		
-		
+                
+                this.addGameObject(go);
 	}
 	
 }

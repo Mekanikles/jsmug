@@ -1,6 +1,6 @@
 package tests;
 
-import jsmug.Core;
+import jsmug.SmugApplication;
 import jsmug.Game;
 import jsmug.GameObject;
 import jsmug.Smug;
@@ -8,7 +8,7 @@ import jsmug.graphics.Text;
 import jsmug.graphics.Text.Anchor;
 import jsmug.resources.Resources;
 
-public class TextTest extends Game
+public class TextTest extends SmugApplication
 {
 	private GameObject[] gos; 
 	private float f = 0.0f;
@@ -32,8 +32,9 @@ public class TextTest extends Game
 	
 		for (Anchor i : Anchor.values())
 		{
-			this.gos[i.ordinal()] = new GameObject(16 + (i.ordinal() % 3) * 200.0f,600 - (50 + (float)(i.ordinal() / 3) * 200 + (i.ordinal() % 3) * 50.0f));
-			this.gos[i.ordinal()].addComponent(new Text(Resources.getInstance().getFont("font"), "" + i, 32.0f, i));
+			this.gos[i.ordinal()] = Smug.newGameObject(16 + (i.ordinal() % 3) * 200.0f,600 - (50 + (float)(i.ordinal() / 3) * 200 + (i.ordinal() % 3) * 50.0f));
+			this.gos[i.ordinal()].addComponent(new Text(Smug.resources.getFont("font"), "" + i, 32.0f, i));
+                        this.addGameObject(this.gos[i.ordinal()]);
 		}	
 	}
 	

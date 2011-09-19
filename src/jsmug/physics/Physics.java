@@ -8,17 +8,6 @@ import jsmug.utils.Rectangle;
 
 public class Physics
 {
-	private static Physics instance;
-	public static Physics getInstance() { if (instance == null) instance = new Physics(); return instance;}
-	
-	private Physics()
-	{
-	}
-	
-	
-
-
-	
 	public boolean intersects(BoxCollider rc1, BoxCollider rc2)
 	{
 		Rectangle rect1 = rc1.getRectangle().add(rc1.getGameObject().getPosition());
