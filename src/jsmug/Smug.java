@@ -18,6 +18,7 @@ public class Smug
 	public static Input input;
 	public static Physics physics;
 	public static Time time;
+        public static Core core;
 
 	private static boolean initialized = false;
 	
@@ -33,6 +34,7 @@ public class Smug
 		physics = new Physics();
 		time = new Time();
                 audio = new Audio();
+                core = new Core();
 		
 		initialized = true;
 	}
@@ -47,7 +49,7 @@ public class Smug
 			return;
 		
                 Smug.app = app;
-                app.run();
+                Smug.core.run(app.name, app.width, app.height, app.fullscreen);                
 	}
         
         public static Scene newScene() {

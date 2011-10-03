@@ -7,6 +7,9 @@ package jsmug.graphics;
 import jsmug.GameObject;
 import jsmug.Scene;
 import jsmug.Smug;
+import jsmug.physics.Collider;
+
+import org.lwjgl.opengl.GL11;
 
 /**
  *
@@ -27,10 +30,10 @@ public class Camera {
                 c.draw(batch);
             }
         }
-        /*
-        if (debugMode) {
+
+        //if (debugMode) {
             GL11.glColor3f(0.0f, 1.0f, 0.0f);
-            for (GameObject gameObject : Smug.app.getScene().getGameObjects()) {
+            for (GameObject gameObject : this.scene.getGameObjects()) {
                 GL11.glColor4f(0.5f, 1.0f, 0.5f, 0.7f);
                 Collider c = gameObject.getCollider();
                 if (c != null) {
@@ -43,6 +46,6 @@ public class Camera {
                 }
 
             }
-        }*/
+        //}
     }
 }

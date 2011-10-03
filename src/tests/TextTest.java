@@ -17,7 +17,6 @@ public class TextTest extends SmugApplication
 	{
 		Smug.initialize();
 		Smug.runGame(new TextTest());
-                Smug.destroy();
         }
 	
 	public TextTest()
@@ -25,9 +24,9 @@ public class TextTest extends SmugApplication
 		
 	}
 	
-	public void start()
+	public void create()
 	{
-		Smug.resources.setResourcePath("data/");
+		Smug.resources.setResourcePath("datca/");
 		this.gos = new GameObject[Anchor.values().length];
 	
 		for (Anchor i : Anchor.values())
@@ -48,4 +47,8 @@ public class TextTest extends SmugApplication
 		
 		this.f += Smug.time.getDeltaTime();
 	}
+        
+        public void dispose() {
+            Smug.destroy();
+        }
 }

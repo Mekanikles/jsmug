@@ -31,8 +31,8 @@ public class GameObject
 		//SmugApplication.getInstance().addGameObject(this);		
 	}
 	
-	GameObject(float posX, float posY) {this(new Vector(posX, posY), 0, new Vector(0, 0));}
-	GameObject(Vector pos) {this(pos, 0, new Vector(0, 0));}
+	GameObject(float posX, float posY) {this(new Vector(posX, posY), 0, new Vector(1, 1));}
+	GameObject(Vector pos) {this(pos, 0, new Vector(1, 1));}
 	
 	
 	public void setPosition(Vector position) { this.position = position; }

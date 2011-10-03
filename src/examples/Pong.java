@@ -5,6 +5,7 @@ import jsmug.GameObject;
 import jsmug.Smug;
 import jsmug.graphics.Sprite;
 import jsmug.graphics.Text;
+import jsmug.graphics.Text.Anchor;
 import jsmug.input.Input;
 import jsmug.input.Input.Keys;
 import jsmug.physics.Physics;
@@ -20,7 +21,6 @@ public class Pong extends SmugApplication
 	{
                 Smug.initialize();
 		Smug.runGame(new Pong());
-                Smug.destroy();
 	}
 	
 	public Pong()
@@ -39,10 +39,10 @@ public class Pong extends SmugApplication
 	
 	private GameObject p1Score;
 	private Text p1ScoreText;
-	private int p1Points = 9;
+	private int p1Points = 0;
 	private GameObject p2Score;
 	private Text p2ScoreText;
-	private int p2Points = 9;
+	private int p2Points = 0;
 	
 	
 	private GameObject leftWall;
@@ -51,13 +51,14 @@ public class Pong extends SmugApplication
 	private GameObject topWall;
 	
 	private Vector ballSpeed;
-	
-    @Override
-	public void start()
+
+        
+        @Override
+	public void create()
 	{
 		Smug.resources.setResourcePath("data/");
-		
-		this.paddles[0] = Smug.newGameObject(new Vector(16, 300));
+
+                this.paddles[0] = Smug.newGameObject(new Vector(16, 300));
 		this.paddles[0].addComponent(new Sprite(16, 96));
 		this.paddles[0].addComponent(new BoxCollider(16, 96));
 		this.paddles[1] = Smug.newGameObject(new Vector(800 - 16, 300));
@@ -69,12 +70,12 @@ public class Pong extends SmugApplication
 		
 		this.net = Smug.newGameObject(new Vector(400, 300));
 		this.net.addComponent(new Sprite(8, 600));
-		
-		this.p1Score = Smug.newGameObject(new Vector(400 - 16, 600 - 64));
+
+                this.p1Score = Smug.newGameObject(new Vector(400 - 16, 600 - 64));
 		this.p1ScoreText = (Text)this.p1Score.addComponent(
-				new Text(Smug.resources.getFont("font"), "" + this.p1Points, 64.0f, Text.Anchor.MIDDLECENTER));
-		
-		this.p2Score = Smug.newGameObject(new Vector(400 + 16, 600 - 64));
+				new Text(Smug.resources.getFont("font"), "" + this.p1Points, 64.0f, Text.Anchor.BOTTOMRIGHT));
+
+                this.p2Score = Smug.newGameObject(new Vector(400 + 16, 600 - 64));
 		this.p2ScoreText = (Text)this.p2Score.addComponent(
 				new Text(Smug.resources.getFont("font"), "" + this.p2Points, 64.0f, Text.Anchor.BOTTOMLEFT));
 		
@@ -89,7 +90,7 @@ public class Pong extends SmugApplication
 		
 		double i = Math.random() * 360.0f;
 		this.ballSpeed = new Vector(Math.cos(i) * 8.0f, Math.sin(i) * 4.0f);
-                
+
                 this.addGameObject(this.paddles[0]);
                 this.addGameObject(this.paddles[1]);
                 this.addGameObject(this.ball);
@@ -174,6 +175,10 @@ public class Pong extends SmugApplication
 			this.p1Points ++;
 			this.p1ScoreText.setText(Integer.toString(this.p1Points));
 		}
-			
 	}
+        
+        @Override
+        public void dispose() {
+                Smug.destroy();
+        }
 }
